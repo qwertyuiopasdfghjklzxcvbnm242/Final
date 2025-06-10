@@ -9,7 +9,9 @@ public class MySketch extends PApplet {
   private Tester test1;
   private Tester hpBar;
   private Tester testing;
-  private Tester stage;
+  private Tester stage1;
+  private Tester stage2;
+  private Tester stage3;
   private Demon small;
   private Demon small2;
   private Demon small3;
@@ -17,9 +19,26 @@ public class MySketch extends PApplet {
   private Demon small5;
   private Demon small6;
   private Demon small7;
-
   private Staff staff;
               
+  
+  private Demon small2_1;
+  private Demon small2_2;
+  private Demon small2_3;
+  private Demon small2_4;
+  private Demon small2_5;
+  private Demon small2_6;
+  private Demon demon2_1;
+  
+  private Demon demon3_1;
+  private Demon demon3_2;
+  private Demon demon3_3;
+  private Demon demon3_4;
+  private Demon demon3_5;
+  private Demon demon3_6;
+  
+  
+  
   private boolean left = false;
   private boolean right = false;
   private boolean down = false;
@@ -29,6 +48,8 @@ public class MySketch extends PApplet {
   private int monkX;
   private int monkY;
   private int stageNum = 0;
+  private int smallDemonCount = 6;
+  private int stage2Count = 7;
   private int smallCount = 0;
   private int hpAllowCount = 0;
   private int hpHitAllowCount = 0;
@@ -47,100 +68,221 @@ public class MySketch extends PApplet {
     test1 = new Tester(this, 200, 200,"images/idle.png");
     hpBar = new Tester(this, 5, 5, "images/hp8.png");
     testing = new Tester(this, 600, 100, "images/demon1.png");
+    
+    
+    
+    // Stage 1
     small = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
     small2 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
     small3 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
     small4 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
     small5 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
     small6 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
-    staff = new Staff(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/staff5.png");
-    stage = new Tester(this, 600, 50, "images/stageN1.png");
+    staff = new Staff(this, 200, 200, "images/staff5.png");
+    
+    // Stage 2
+    small2_1 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
+    small2_2 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
+    small2_3 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
+    small2_4 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
+    small2_5 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
+    small2_6 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
+    demon2_1 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
+    
+    // Stage 3
+    demon3_1 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
+    demon3_2 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
+    demon3_3 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
+    demon3_4 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
+    demon3_5 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
+    demon3_6 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
+    
+    
+    
+    stage1 = new Tester(this, 500, 50, "images/stageN1.png");
+    stage2 = new Tester(this, 500, 50, "images/stageN2.png");
+    stage3 = new Tester(this, 500, 50, "images/stageN3.png");
   }
   public void draw() {
     
     background(240,255,255);
-    stage.draw();
+    stage1.draw();
+    stage1.chase(460, -500);
     staff.chase2(staffX, staffY);
     staff.draw();
     test1.draw();
     hpBar.draw();
-    small.draw();
-    small2.draw();
-    small3.draw();
-    small4.draw();
-    small5.draw();
-    small6.draw();
+
     staffX = test1.getX();
     staffY = test1.getY();
-
+    if (smallDemonCount == 0){
+        stageNum = 1;
+    } else if (stage2Count == 0){
+        stageNum = 2;
+    }
+    if (stageNum == 0){
+        small.draw();
+        small2.draw();
+        small3.draw();
+        small4.draw();
+        small5.draw();
+        small6.draw();
+        if(small.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            small.chase(monkX,monkY);
+            if (smallCount <= 20) small.setImagePath("images/small1.png");
+            if (smallCount <= 50 && smallCount > 20) small.setImagePath("images/small2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(small2.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            small2.chase(monkX,monkY);
+            if (smallCount <= 20) small2.setImagePath("images/small1.png");
+            if (smallCount <= 50 && smallCount > 20) small2.setImagePath("images/small2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(small3.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            small3.chase(monkX,monkY);
+            if (smallCount <= 20) small3.setImagePath("images/small1.png");
+            if (smallCount <= 50 && smallCount > 20) small3.setImagePath("images/small2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(small3.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            small3.chase(monkX,monkY);
+            if (smallCount <= 20) small3.setImagePath("images/small1.png");
+            if (smallCount <= 50 && smallCount > 20) small3.setImagePath("images/small2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(small4.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            small4.chase(monkX,monkY);
+            if (smallCount <= 20) small4.setImagePath("images/small1.png");
+            if (smallCount <= 50 && smallCount > 20) small4.setImagePath("images/small2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(small5.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            small5.chase(monkX,monkY);
+            if (smallCount <= 20) small5.setImagePath("images/small1.png");
+            if (smallCount <= 50 && smallCount > 20) small5.setImagePath("images/small2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(small6.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            small6.chase(monkX,monkY);
+            if (smallCount <= 20) small6.setImagePath("images/small1.png");
+            if (smallCount <= 50 && smallCount > 20) small6.setImagePath("images/small2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+    }
+    if (stageNum == 1){
+        stage2.draw();
+        stage2.chase(460, -500);
+        small2_1.draw();
+        small2_2.draw();
+        small2_3.draw();
+        small2_4.draw();
+        small2_5.draw();
+        small2_6.draw();
+        demon2_1.draw();
+        if(small2_1.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            small2_1.chase(monkX,monkY);
+            if (smallCount <= 20) small2_1.setImagePath("images/small1.png");
+            if (smallCount <= 50 && smallCount > 20) small2_1.setImagePath("images/small2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(small2_2.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            small2_2.chase(monkX,monkY);
+            if (smallCount <= 20) small2_2.setImagePath("images/small1.png");
+            if (smallCount <= 50 && smallCount > 20) small2_2.setImagePath("images/small2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(small2_3.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            small2_3.chase(monkX,monkY);
+            if (smallCount <= 20) small2_3.setImagePath("images/small1.png");
+            if (smallCount <= 50 && smallCount > 20) small2_3.setImagePath("images/small2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(small2_4.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            small2_4.chase(monkX,monkY);
+            if (smallCount <= 20) small2_4.setImagePath("images/small1.png");
+            if (smallCount <= 50 && smallCount > 20) small2_4.setImagePath("images/small2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(small2_5.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            small2_5.chase(monkX,monkY);
+            if (smallCount <= 20) small2_5.setImagePath("images/small1.png");
+            if (smallCount <= 50 && smallCount > 20) small2_5.setImagePath("images/small2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(small2_6.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            small2_6.chase(monkX,monkY);
+            if (smallCount <= 20) small2_6.setImagePath("images/small1.png");
+            if (smallCount <= 50 && smallCount > 20) small2_6.setImagePath("images/small2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(demon2_1.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            demon2_1.chase(monkX,monkY);
+            if (smallCount <= 20) demon2_1.setImagePath("images/demon1.png");
+            if (smallCount <= 50 && smallCount > 20) demon2_1.setImagePath("images/demon2.png");
+            if (smallCount > 40) smallCount = 0;
+        }  
+    }
+    if (stageNum == 2){
+        demon3_1.draw();
+        demon3_2.draw();
+        demon3_3.draw();
+        demon3_4.draw();
+        demon3_5.draw();
+        demon3_6.draw();
+        stage3.draw();
+        stage3.chase(460, -500);
+    }
     
     
     
     
     
-    if(small.getHp() > 0){
-        smallCount++;
-        monkX = test1.getX();
-        monkY = test1.getY();
-        small.chase(monkX,monkY);
-        if (smallCount <= 20) small.setImagePath("images/small1.png");
-        if (smallCount <= 50 && smallCount > 20) small.setImagePath("images/small2.png");
-        if (smallCount > 40) smallCount = 0;
-    }
-    if(small2.getHp() > 0){
-        smallCount++;
-        monkX = test1.getX();
-        monkY = test1.getY();
-        small2.chase(monkX,monkY);
-        if (smallCount <= 20) small2.setImagePath("images/small1.png");
-        if (smallCount <= 50 && smallCount > 20) small2.setImagePath("images/small2.png");
-        if (smallCount > 40) smallCount = 0;
-    }
-    if(small3.getHp() > 0){
-        smallCount++;
-        monkX = test1.getX();
-        monkY = test1.getY();
-        small3.chase(monkX,monkY);
-        if (smallCount <= 20) small3.setImagePath("images/small1.png");
-        if (smallCount <= 50 && smallCount > 20) small3.setImagePath("images/small2.png");
-        if (smallCount > 40) smallCount = 0;
-    }
-    if(small3.getHp() > 0){
-        smallCount++;
-        monkX = test1.getX();
-        monkY = test1.getY();
-        small3.chase(monkX,monkY);
-        if (smallCount <= 20) small3.setImagePath("images/small1.png");
-        if (smallCount <= 50 && smallCount > 20) small3.setImagePath("images/small2.png");
-        if (smallCount > 40) smallCount = 0;
-    }
-    if(small4.getHp() > 0){
-        smallCount++;
-        monkX = test1.getX();
-        monkY = test1.getY();
-        small4.chase(monkX,monkY);
-        if (smallCount <= 20) small4.setImagePath("images/small1.png");
-        if (smallCount <= 50 && smallCount > 20) small4.setImagePath("images/small2.png");
-        if (smallCount > 40) smallCount = 0;
-    }
-    if(small5.getHp() > 0){
-        smallCount++;
-        monkX = test1.getX();
-        monkY = test1.getY();
-        small5.chase(monkX,monkY);
-        if (smallCount <= 20) small5.setImagePath("images/small1.png");
-        if (smallCount <= 50 && smallCount > 20) small5.setImagePath("images/small2.png");
-        if (smallCount > 40) smallCount = 0;
-    }
-    if(small6.getHp() > 0){
-        smallCount++;
-        monkX = test1.getX();
-        monkY = test1.getY();
-        small6.chase(monkX,monkY);
-        if (smallCount <= 20) small6.setImagePath("images/small1.png");
-        if (smallCount <= 50 && smallCount > 20) small6.setImagePath("images/small2.png");
-        if (smallCount > 40) smallCount = 0;
-    }
+    
+    
+    
     
         if (hpCount == 1){
             hpBar.setImagePath("images/7hp.png");
@@ -162,7 +304,6 @@ public class MySketch extends PApplet {
             hpBar.setImagePath("images/hp8.png");
         }
     if (keyPressed) {
-        
         count++;
         bananaCount++;
         hpAllowCount++;
@@ -241,31 +382,82 @@ public class MySketch extends PApplet {
             if (staffCount <= 25 && staffCount > 15) staff.setImagePath("images/staff4.png");
             if (staffCount > 20) staffCount = 0;
             idleCount = 0;
-            
+            // Stage 1
             if (staff.isCollidingWith2(small)){
                 small.setImagePath("images/smallDeath.png");
                 small.setHp(0);
                 small.die(9999,9999);
-                
+                smallDemonCount--;
             }
             if (staff.isCollidingWith2(small2)){
                 small2.setHp(0);
                 small2.die(9999,9999);
+                smallDemonCount--;
             }
             if (staff.isCollidingWith2(small3)){
                 small3.setHp(0);
                 small3.die(9999,9999);
+                smallDemonCount--;
             }
             if (staff.isCollidingWith2(small4)){
                 small4.setHp(0);
                 small4.die(9999,9999);
+                smallDemonCount--;
             }
             if (staff.isCollidingWith2(small5)){
                 small5.setHp(0);
                 small5.die(9999,9999);
+                smallDemonCount--;
             }
+           if (staff.isCollidingWith2(small6)){
+                small6.setHp(0);
+                small6.die(9999,9999);
+                smallDemonCount--;
+            }
+           // Stage 2
+            if (staff.isCollidingWith2(small2_1)){
+                small2_1.setImagePath("images/smallDeath.png");
+                small2_1.setHp(0);
+                small2_1.die(9999,9999);
+                stage2Count--;
+            }
+            if (staff.isCollidingWith2(small2_2)){
+                small2_2.setHp(0);
+                small2_2.die(9999,9999);
+                stage2Count--;
+            }
+            if (staff.isCollidingWith2(small2_3)){
+                small2_3.setHp(0);
+                small2_3.die(9999,9999);
+                stage2Count--;
+            }
+            if (staff.isCollidingWith2(small2_4)){
+                small2_4.setHp(0);
+                small2_4.die(9999,9999);
+                stage2Count--;
+            }
+            if (staff.isCollidingWith2(small2_5)){
+                small2_5.setHp(0);
+                small2_5.die(9999,9999);
+                stage2Count--;
+            }
+           if (staff.isCollidingWith2(small2_6)){
+                small2_6.setHp(0);
+                small2_6.die(9999,9999);
+                stage2Count--;
+            }
+           if (staff.isCollidingWith2(demon2_1)){
+                demon2_1.hit();
+                if (demon2_1.getHp() <= 0){
+                    demon2_1.die(9999,9999);
+                    stage2Count--;
+                }
+                
+            }
+           
         }     
         }
+    // Stage 1
     if (small.isCollidingWith(test1)){
         if (hpHitAllowCount > 15) {
             hpCount++;
@@ -302,6 +494,47 @@ public class MySketch extends PApplet {
             hpHitAllowCount = 0;
         }
     } 
+    
+    // Stage 2
+    if (small2_1.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    } 
+    if (small2_2.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    } 
+    if (small2_3.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    } 
+    if (small2_4.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    } 
+    if (small2_5.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    } 
+    if (small2_6.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    
+    
+    
     
 
     if (!keyPressed){
