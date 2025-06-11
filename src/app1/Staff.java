@@ -34,6 +34,18 @@ public class Staff extends Tester{
     public void setY(int y){
         this.y = y;
     }
-    
+    @Override
+    public void chase(int dx, int dy){
+        if (x > dx+100){
+            move(0,-5);
+        } else if (x < dx+100){
+            move(0,5);
+        }
+        if (y > dy){
+            move(-5,0);
+        } else if (y < dy){
+            move(5,0);
+        }  
+    }
 }
 

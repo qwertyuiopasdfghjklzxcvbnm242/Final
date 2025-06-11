@@ -6,11 +6,12 @@ package app1;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+
 /**
  *
  * @author 242353497
  */
-public class Demon extends Tester{
+public class Fast extends Demon {
     public int x,y;
     private int age;
     private String name;
@@ -20,24 +21,8 @@ public class Demon extends Tester{
 
     
     
-    public Demon(PApplet p, int x , int y, String imagePath, int hp){
-        super(p, x, y, imagePath);
+    public Fast(PApplet p, int x , int y, String imagePath, int hp){
+        super(p, x, y, imagePath, hp);
         this.hp = hp;
     }
-    
-    public int getHp(){
-        return hp;
-    }
-    public void setHp(int hp){
-        this.hp = hp;
-    }
-    public void hit(){
-        hp--;
-    }
-
-    
-    
-    
-    
-    
 }

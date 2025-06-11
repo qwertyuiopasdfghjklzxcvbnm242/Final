@@ -12,6 +12,8 @@ public class MySketch extends PApplet {
   private Tester stage1;
   private Tester stage2;
   private Tester stage3;
+  private Tester stage4;
+  private Tester stage5;
   private Demon small;
   private Demon small2;
   private Demon small3;
@@ -19,8 +21,7 @@ public class MySketch extends PApplet {
   private Demon small5;
   private Demon small6;
   private Demon small7;
-  private Staff staff;
-              
+  private Staff staff;       
   
   private Demon small2_1;
   private Demon small2_2;
@@ -37,6 +38,18 @@ public class MySketch extends PApplet {
   private Demon demon3_5;
   private Demon demon3_6;
   
+  private Demon demon4_1;
+  private Demon demon4_2;
+  private Demon demon4_3;
+  private Demon demon4_4;
+  private Demon demon4_5;
+  private Demon demon4_6;
+  private Demon fast4_1;
+  
+  private Demon fast5_1;
+  private Demon fast5_2;
+  private Demon fast5_3;
+  private Demon Boss5_1;
   
   
   private boolean left = false;
@@ -50,6 +63,9 @@ public class MySketch extends PApplet {
   private int stageNum = 0;
   private int smallDemonCount = 6;
   private int stage2Count = 7;
+  private int stage3Count = 6;
+  private int stage4Count = 7;
+  private int stage5Count = 4;
   private int smallCount = 0;
   private int hpAllowCount = 0;
   private int hpHitAllowCount = 0;
@@ -68,7 +84,7 @@ public class MySketch extends PApplet {
     test1 = new Tester(this, 200, 200,"images/idle.png");
     hpBar = new Tester(this, 5, 5, "images/hp8.png");
     testing = new Tester(this, 600, 100, "images/demon1.png");
-    
+    staff = new Staff(this, 200, 200, "images/staff5.png");
     
     
     // Stage 1
@@ -78,7 +94,7 @@ public class MySketch extends PApplet {
     small4 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
     small5 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
     small6 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
-    staff = new Staff(this, 200, 200, "images/staff5.png");
+
     
     // Stage 2
     small2_1 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
@@ -97,30 +113,57 @@ public class MySketch extends PApplet {
     demon3_5 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
     demon3_6 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
     
+    // Stage 4
+    demon4_1 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
+    demon4_2 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
+    demon4_3 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
+    demon4_4 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
+    demon4_5 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
+    demon4_6 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
+    fast4_1 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/test1.png", 50);
+    
+    // Stage 5
+    fast5_1 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/test1.png", 50);
+    fast5_2 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/test1.png", 50);
+    fast5_3 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/test1.png", 50);
+    Boss5_1 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 500);
     
     
     stage1 = new Tester(this, 500, 50, "images/stageN1.png");
     stage2 = new Tester(this, 500, 50, "images/stageN2.png");
     stage3 = new Tester(this, 500, 50, "images/stageN3.png");
+    stage4 = new Tester(this, 500, 50, "images/stageN4.png");
+    stage5 = new Tester(this, 500, 50, "images/stageN5.png");
   }
   public void draw() {
     
     background(240,255,255);
-    stage1.draw();
-    stage1.chase(460, -500);
     staff.chase2(staffX, staffY);
     staff.draw();
     test1.draw();
     hpBar.draw();
-
+    System.out.print(stageNum);
     staffX = test1.getX();
     staffY = test1.getY();
     if (smallDemonCount == 0){
         stageNum = 1;
-    } else if (stage2Count == 0){
+        smallDemonCount = 10;
+    } 
+    if (stage2Count == 0){
         stageNum = 2;
+        stage2Count = 10;
+    }
+    if (stage3Count == 0){
+        stageNum = 3;
+        stage3Count = 10;
+    }
+    if (stage4Count == 0){
+        stageNum = 4;
+        stage4Count = 10;
     }
     if (stageNum == 0){
+        stage1.draw();
+        stage1.chase(460, -500);
         small.draw();
         small2.draw();
         small3.draw();
@@ -274,16 +317,176 @@ public class MySketch extends PApplet {
         demon3_6.draw();
         stage3.draw();
         stage3.chase(460, -500);
+        
+        if(demon3_1.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            demon3_1.chase(monkX,monkY);
+            if (smallCount <= 20) demon3_1.setImagePath("images/demon1.png");
+            if (smallCount <= 50 && smallCount > 20) demon3_1.setImagePath("images/demon2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(demon3_2.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            demon3_2.chase(monkX,monkY);
+            if (smallCount <= 20) demon3_2.setImagePath("images/demon1.png");
+            if (smallCount <= 50 && smallCount > 20) demon3_2.setImagePath("images/demon2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(demon3_3.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            demon3_3.chase(monkX,monkY);
+            if (smallCount <= 20) demon3_3.setImagePath("images/demon1.png");
+            if (smallCount <= 50 && smallCount > 20) demon3_3.setImagePath("images/demon2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(demon3_4.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            demon3_4.chase(monkX,monkY);
+            if (smallCount <= 20) demon3_4.setImagePath("images/demon1.png");
+            if (smallCount <= 50 && smallCount > 20) demon3_4.setImagePath("images/demon2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(demon3_5.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            demon3_5.chase(monkX,monkY);
+            if (smallCount <= 20) demon3_5.setImagePath("images/demon1.png");
+            if (smallCount <= 50 && smallCount > 20) demon3_5.setImagePath("images/demon2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(demon3_6.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            demon3_6.chase(monkX,monkY);
+            if (smallCount <= 20) demon3_6.setImagePath("images/demon1.png");
+            if (smallCount <= 50 && smallCount > 20) demon3_6.setImagePath("images/demon2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+    }
+    if (stageNum == 3){
+        demon4_1.draw();
+        demon4_2.draw();
+        demon4_3.draw();
+        demon4_4.draw();
+        demon4_5.draw();
+        demon4_6.draw();
+        fast4_1.draw();
+        stage4.draw();
+        stage4.chase(460, -500);
+        
+                
+        if(demon4_1.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            demon4_1.chase(monkX,monkY);
+            if (smallCount <= 20) demon4_1.setImagePath("images/demon1.png");
+            if (smallCount <= 50 && smallCount > 20) demon4_1.setImagePath("images/demon2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(demon4_2.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            demon4_2.chase(monkX,monkY);
+            if (smallCount <= 20) demon4_2.setImagePath("images/demon1.png");
+            if (smallCount <= 50 && smallCount > 20) demon4_2.setImagePath("images/demon2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(demon4_3.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            demon4_3.chase(monkX,monkY);
+            if (smallCount <= 20) demon4_3.setImagePath("images/demon1.png");
+            if (smallCount <= 50 && smallCount > 20) demon4_3.setImagePath("images/demon2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(demon4_4.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            demon4_4.chase(monkX,monkY);
+            if (smallCount <= 20) demon4_4.setImagePath("images/demon1.png");
+            if (smallCount <= 50 && smallCount > 20) demon4_4.setImagePath("images/demon2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(demon4_5.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            demon4_5.chase(monkX,monkY);
+            if (smallCount <= 20) demon4_5.setImagePath("images/demon1.png");
+            if (smallCount <= 50 && smallCount > 20) demon4_5.setImagePath("images/demon2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(demon4_6.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            demon4_6.chase(monkX,monkY);
+            if (smallCount <= 20) demon4_6.setImagePath("images/demon1.png");
+            if (smallCount <= 50 && smallCount > 20) demon4_6.setImagePath("images/demon2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(fast4_1.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            fast4_1.chase2(monkX,monkY);
+            if (smallCount <= 20) fast4_1.setImagePath("images/test1.png");
+            if (smallCount <= 50 && smallCount > 20) fast4_1.setImagePath("images/test2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+    }
+    if (stageNum == 4){
+        stage5.draw();
+        stage5.chase(460, -500);
+        fast5_1.draw();
+        fast5_2.draw();
+        fast5_3.draw();
+        Boss5_1.draw();
+        if(fast5_1.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            fast5_1.chase2(monkX,monkY);
+            if (smallCount <= 20) fast5_1.setImagePath("images/test1.png");
+            if (smallCount <= 50 && smallCount > 20) fast5_1.setImagePath("images/test2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(fast5_2.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            fast5_2.chase2(monkX,monkY);
+            if (smallCount <= 20) fast5_2.setImagePath("images/test1.png");
+            if (smallCount <= 50 && smallCount > 20) fast5_2.setImagePath("images/test2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+        if(fast5_3.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            fast5_3.chase2(monkX,monkY);
+            if (smallCount <= 20) fast5_1.setImagePath("images/test1.png");
+            if (smallCount <= 50 && smallCount > 20) fast5_3.setImagePath("images/test2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
+
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
+
         if (hpCount == 1){
             hpBar.setImagePath("images/7hp.png");
         } else if (hpCount ==2) {
@@ -416,7 +619,6 @@ public class MySketch extends PApplet {
             }
            // Stage 2
             if (staff.isCollidingWith2(small2_1)){
-                small2_1.setImagePath("images/smallDeath.png");
                 small2_1.setHp(0);
                 small2_1.die(9999,9999);
                 stage2Count--;
@@ -452,9 +654,129 @@ public class MySketch extends PApplet {
                     demon2_1.die(9999,9999);
                     stage2Count--;
                 }
-                
             }
-           
+           // Stage 3
+           if (staff.isCollidingWith2(demon3_1)){
+                demon3_1.hit();
+                if (demon3_1.getHp() <= 0){
+                    demon3_1.die(9999,9999);
+                    stage3Count--;
+                }
+            }
+           if (staff.isCollidingWith2(demon3_2)){
+                demon3_2.hit();
+                if (demon3_2.getHp() <= 0){
+                    demon3_2.die(9999,9999);
+                    stage3Count--;
+                }
+            }
+           if (staff.isCollidingWith2(demon3_3)){
+                demon3_3.hit();
+                if (demon3_3.getHp() <= 0){
+                    demon3_3.die(9999,9999);
+                    stage3Count--;
+                }
+            }
+           if (staff.isCollidingWith2(demon3_4)){
+                demon3_4.hit();
+                if (demon3_4.getHp() <= 0){
+                    demon3_4.die(9999,9999);
+                    stage3Count--;
+                }
+            }
+           if (staff.isCollidingWith2(demon3_5)){
+                demon3_5.hit();
+                if (demon3_5.getHp() <= 0){
+                    demon3_5.die(9999,9999);
+                    stage3Count--;
+                }
+            }
+           if (staff.isCollidingWith2(demon3_6)){
+                demon3_6.hit();
+                if (demon3_6.getHp() <= 0){
+                    demon3_6.die(9999,9999);
+                    stage3Count--;
+                }
+            }
+           // Stage 4
+           if (staff.isCollidingWith2(demon4_1)){
+                demon4_1.hit();
+                if (demon4_1.getHp() <= 0){
+                    demon4_1.die(9999,9999);
+                    stage4Count--;
+                }
+            }
+           if (staff.isCollidingWith2(demon4_2)){
+                demon4_2.hit();
+                if (demon4_2.getHp() <= 0){
+                    demon4_2.die(9999,9999);
+                    stage4Count--;
+                }
+            }
+           if (staff.isCollidingWith2(demon4_3)){
+                demon4_3.hit();
+                if (demon4_3.getHp() <= 0){
+                    demon4_3.die(9999,9999);
+                    stage4Count--;
+                }
+            }
+           if (staff.isCollidingWith2(demon4_4)){
+                demon4_4.hit();
+                if (demon4_4.getHp() <= 0){
+                    demon4_4.die(9999,9999);
+                    stage4Count--;
+                }
+            }
+           if (staff.isCollidingWith2(demon4_5)){
+                demon4_5.hit();
+                if (demon4_5.getHp() <= 0){
+                    demon4_5.die(9999,9999);
+                    stage4Count--;
+                }
+            }
+           if (staff.isCollidingWith2(demon4_6)){
+                demon4_6.hit();
+                if (demon4_6.getHp() <= 0){
+                    demon4_6.die(9999,9999);
+                    stage4Count--;
+                }
+            }
+           if (staff.isCollidingWith2(fast4_1)){
+                fast4_1.hit();
+                if (fast4_1.getHp() <= 0){
+                    fast4_1.die(9999,9999);
+                    stage4Count--;
+                }
+            }
+           // Stage 5
+           if (staff.isCollidingWith2(fast5_1)){
+                fast5_1.hit();
+                if (fast5_1.getHp() <= 0){
+                    fast5_1.die(9999,9999);
+                    stage4Count--;
+                }
+            }
+           if (staff.isCollidingWith2(fast5_2)){
+                fast5_2.hit();
+                if (fast5_2.getHp() <= 0){
+                    fast5_2.die(9999,9999);
+                    stage4Count--;
+                }
+            }
+           if (staff.isCollidingWith2(fast5_3)){
+                fast5_3.hit();
+                if (fast5_3.getHp() <= 0){
+                    fast5_3.die(9999,9999);
+                    stage4Count--;
+                }
+            }
+           if (staff.isCollidingWith2(Boss5_1)){
+                Boss5_1.hit();
+                if (Boss5_1.getHp() <= 0){
+                    Boss5_1.die(9999,9999);
+                    stage4Count--;
+                }
+            }
         }     
         }
     // Stage 1
@@ -532,19 +854,125 @@ public class MySketch extends PApplet {
             hpHitAllowCount = 0;
         }
     }
+    if (demon2_1.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    // Stage 3
+    if (demon3_1.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    if (demon3_2.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    if (demon3_3.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    if (demon3_4.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    if (demon3_5.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    if (demon3_6.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    // Stage 4
+    if (demon4_1.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    if (demon4_2.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    if (demon4_3.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    if (demon4_4.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    if (demon4_5.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    if (demon4_6.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    if (fast4_1.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    // Stage 5
+    if (fast5_1.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    if (fast5_2.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    if (fast5_3.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
+    if (Boss5_1.isCollidingWith(test1)){
+        if (hpHitAllowCount > 15) {
+            hpCount++;
+            hpHitAllowCount = 0;
+        }
+    }
     
-    
-    
-    
-
     if (!keyPressed){
         idleCount++;
         staff.setImagePath("images/staff5.png");
         if (idleCount < 40) test1.setImagePath("images/monkeyidlepos1.png");
         if (idleCount < 80 && idleCount > 40) test1.setImagePath("images/monkeyidlepos2.png");
         if (idleCount > 80) idleCount = 0;
-        if (idleCount > 10) count = 0; 
-
+        if (idleCount > 10) count = 0;
     }   
     }
 

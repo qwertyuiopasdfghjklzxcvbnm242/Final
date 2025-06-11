@@ -78,6 +78,18 @@ public class Tester {
             move(5,0);
         }  
     }
+    public void chase3 (int dx, int dy){
+        if (x > dx+40){
+            move(0,-7);
+        } else if (x < dx+40){
+            move(0,7);
+        }
+        if (y > dy){
+            move(-7,0);
+        } else if (y < dy){
+            move(7,0);
+        }  
+    }
     public void die (int dx, int dy){
         if (x > dx+100){
             move(0,-1000);
