@@ -12,6 +12,7 @@ import processing.core.PImage;
  * @author 242353497
  */
 public class boss extends Tester{
+    // Declare variables
     private coord c;
     public int x,y;
     private int age;
@@ -19,15 +20,21 @@ public class boss extends Tester{
     private PApplet app;
     private PImage image;
     private int hp;
+    // Constructor
     public boss(PApplet p, coord c, String imagePath, int hp){
         super(p, c.getX(), c.getY(), imagePath);
         this.hp = hp;
     }
-    
+    /*
+    * This method reduces hp
+    */
     public void hit(){
         hp--;
     }
-
+    /*
+    * returns hp
+    * @return hp
+    */
     public int getHP(){
         return hp;
     }

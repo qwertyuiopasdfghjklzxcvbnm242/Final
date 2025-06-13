@@ -12,6 +12,7 @@ import processing.core.PApplet;
 
 public class MySketch extends PApplet {
   // Declare variables
+  // Stage 1
   private Tester test1;
   private Tester hpBar;
   private Tester testing;
@@ -28,7 +29,7 @@ public class MySketch extends PApplet {
   private Demon small6;
   private Demon small7;
   private Staff staff;       
-  
+  // Stage 2
   private Demon small2_1;
   private Demon small2_2;
   private Demon small2_3;
@@ -36,14 +37,14 @@ public class MySketch extends PApplet {
   private Demon small2_5;
   private Demon small2_6;
   private Demon demon2_1;
-  
+  // Stage 3
   private Demon demon3_1;
   private Demon demon3_2;
   private Demon demon3_3;
   private Demon demon3_4;
   private Demon demon3_5;
   private Demon demon3_6;
-  
+  // Stage 4
   private Demon demon4_1;
   private Demon demon4_2;
   private Demon demon4_3;
@@ -51,22 +52,21 @@ public class MySketch extends PApplet {
   private Demon demon4_5;
   private Demon demon4_6;
   private Demon fast4_1;
-  
+  // Stage 5
   private Demon fast5_1;
   private Demon fast5_2;
   private Demon fast5_3;
   private boss Boss5_1;
-  
+  // Game materials
   private Tester scriptures; 
   private Tester grat;
-  
   private Tester bud;
   private Tester d1;
   private Tester d2;
   private Tester d3;
   private coord bosscoord;
-  
-  
+  private Tester gameOver;
+  // Variables
   private boolean left = false;
   private boolean right = false;
   private boolean down = false;
@@ -75,7 +75,7 @@ public class MySketch extends PApplet {
   private int staffY;
   private int monkX;
   private int monkY;
-  private int stageNum = 4;
+  private int stageNum = -1;
   private int smallDemonCount;
   private int stage2Count;
   private int stage3Count;
@@ -94,9 +94,10 @@ public class MySketch extends PApplet {
   private int tutCount = 0;
   private boolean banana = false;
   public void settings() {
-    size(1500, 800);
+    size(1500, 750); // Set size
   }
   public void setup() {
+    // Instantiate 
     background(255);
     test1 = new Tester(this, 200, 200,"images/idle.png");
     hpBar = new Tester(this, 5, 5, "images/hp8.png");
@@ -146,35 +147,37 @@ public class MySketch extends PApplet {
     Boss5_1 = new boss(this, bosscoord , "images/boss1.png", 500);
     
     // Stage 6
-    scriptures = new Tester(this, 2000, 200,"images/test1.png");
+    scriptures = new Tester(this, 2000, 200,"images/scroll.png");
     grat = new Tester (this, 450, 50,"images/congrat.png");
-    
+    // Game material
     bud = new Tester (this, 450, 200, "images/buddha.png");
     d1 = new Tester (this, 450, 50, "images/d1.png");
     d2 = new Tester (this, 500, 50, "images/d2.png");
     d3 = new Tester (this, 550, 50, "images/d3.png");
     
-    
+    // Stages
     stage1 = new Tester(this, 500, 50, "images/stageN1.png");
     stage2 = new Tester(this, 500, 50, "images/stageN2.png");
     stage3 = new Tester(this, 500, 50, "images/stageN3.png");
     stage4 = new Tester(this, 500, 50, "images/stageN4.png");
     stage5 = new Tester(this, 500, 50, "images/stageN5.png");
-    
-    
+    gameOver = new Tester(this, 0, 0, "images/tt5.png");
+    // File data 
     int lines = countLines("stageFile");
     int [] stageNumCounters = new int [lines];
     String [] stringStageNumCounters = take(lines, "stageFile");
+    // Convert to int
     for (int i = 0; i < stringStageNumCounters.length;i++){
         stageNumCounters[i] = Integer.parseInt(stringStageNumCounters[i]);
     }
+    // Set values
     smallDemonCount = stageNumCounters[0];
     stage2Count = stageNumCounters[1];
     stage3Count = stageNumCounters[2];
     stage4Count = stageNumCounters[3];
     stage5Count = stageNumCounters[4];
     stage6Count = stageNumCounters[5];
-    
+    // Size of file for win count
     int winCount = countLines("winRecords");
     winCount--;
     System.out.print("Total wins: ");
@@ -182,17 +185,16 @@ public class MySketch extends PApplet {
     
   }
   public void draw() {
-
-
-    
-    
+      // Draw starting
     background(240,255,255);
     staff.chase2(staffX, staffY);
     staff.draw();
     test1.draw();
     hpBar.draw();
+    // Get coords
     staffX = test1.getX();
     staffY = test1.getY();
+    // Stage transitioners
     if (smallDemonCount == 0){
         stageNum = 1;
         smallDemonCount = 10;
@@ -216,10 +218,10 @@ public class MySketch extends PApplet {
     if (stage6Count == 0){
         grat.draw();
     }
-    if (stageNum == -1){
-        
+    if (stageNum == 7){
+        gameOver.draw();
     }
-    
+    // Start
     if (stageNum == -1){
         tutCount++;
         bud.draw();
@@ -238,8 +240,9 @@ public class MySketch extends PApplet {
     }
     
     
-    
+    // Stage 1
     if (stageNum == 0){
+        // Draw mobs
         stage1.draw();
         stage1.chase(460, -500);
         small.draw();
@@ -248,14 +251,19 @@ public class MySketch extends PApplet {
         small4.draw();
         small5.draw();
         small6.draw();
+        // Mobs
         if(small.getHp() > 0){
-            smallCount++;
-            monkX = test1.getX();
+            // increase counter
+            smallCount++; 
+            // Get wukong coords
+            monkX = test1.getX(); 
             monkY = test1.getY();
+            // Follow method
             small.chase(monkX,monkY);
+            // Animation change
             if (smallCount <= 20) small.setImagePath("images/small1.png");
             if (smallCount <= 50 && smallCount > 20) small.setImagePath("images/small2.png");
-            if (smallCount > 40) smallCount = 0;
+            if (smallCount > 40) smallCount = 0; // reset animation
         }
         if(small2.getHp() > 0){
             smallCount++;
@@ -313,6 +321,7 @@ public class MySketch extends PApplet {
         }
     }
     if (stageNum == 1){
+        // Draw starting 
         stage2.draw();
         stage2.chase(460, -500);
         small2_1.draw();
@@ -322,14 +331,19 @@ public class MySketch extends PApplet {
         small2_5.draw();
         small2_6.draw();
         demon2_1.draw();
+        // Mobs
         if(small2_1.getHp() > 0){
+            // Increase counter
             smallCount++;
+            // Get wukong coords
             monkX = test1.getX();
             monkY = test1.getY();
+            // Call follow method
             small2_1.chase(monkX,monkY);
+            // animation
             if (smallCount <= 20) small2_1.setImagePath("images/small1.png");
             if (smallCount <= 50 && smallCount > 20) small2_1.setImagePath("images/small2.png");
-            if (smallCount > 40) smallCount = 0;
+            if (smallCount > 40) smallCount = 0; // reset 
         }
         if(small2_2.getHp() > 0){
             smallCount++;
@@ -387,6 +401,7 @@ public class MySketch extends PApplet {
         }  
     }
     if (stageNum == 2){
+        // Draw starting
         demon3_1.draw();
         demon3_2.draw();
         demon3_3.draw();
@@ -395,15 +410,19 @@ public class MySketch extends PApplet {
         demon3_6.draw();
         stage3.draw();
         stage3.chase(460, -500);
-        
+        // Mobs
         if(demon3_1.getHp() > 0){
+            // Increase counter
             smallCount++;
+            // Get Wukong coords
             monkX = test1.getX();
             monkY = test1.getY();
+            // Call follow method
             demon3_1.chase(monkX,monkY);
+            // Animation
             if (smallCount <= 20) demon3_1.setImagePath("images/demon1.png");
             if (smallCount <= 50 && smallCount > 20) demon3_1.setImagePath("images/demon2.png");
-            if (smallCount > 40) smallCount = 0;
+            if (smallCount > 40) smallCount = 0; // Reset
         }
         if(demon3_2.getHp() > 0){
             smallCount++;
@@ -452,6 +471,7 @@ public class MySketch extends PApplet {
         }
     }
     if (stageNum == 3){
+        // Draw starting
         demon4_1.draw();
         demon4_2.draw();
         demon4_3.draw();
@@ -462,15 +482,19 @@ public class MySketch extends PApplet {
         stage4.draw();
         stage4.chase(460, -500);
         
-                
+        // Mobs        
         if(demon4_1.getHp() > 0){
+            // Increase counter
             smallCount++;
+            // Get coords
             monkX = test1.getX();
             monkY = test1.getY();
+            // Call follow method
             demon4_1.chase(monkX,monkY);
+            // Animation
             if (smallCount <= 20) demon4_1.setImagePath("images/demon1.png");
             if (smallCount <= 50 && smallCount > 20) demon4_1.setImagePath("images/demon2.png");
-            if (smallCount > 40) smallCount = 0;
+            if (smallCount > 40) smallCount = 0; // reset
         }
         if(demon4_2.getHp() > 0){
             smallCount++;
@@ -528,20 +552,26 @@ public class MySketch extends PApplet {
         }
     }
     if (stageNum == 4){
+        // Draw starting
         stage5.draw();
         stage5.chase(460, -500);
         fast5_1.draw();
         fast5_2.draw();
         fast5_3.draw();
         Boss5_1.draw();
+        // Mobs
         if(fast5_1.getHp() > 0){
+            // increase counter
             smallCount++;
+            // get coords
             monkX = test1.getX();
             monkY = test1.getY();
+            // call method following
             fast5_1.chase3(monkX,monkY);
+            // animation
             if (smallCount <= 20) fast5_1.setImagePath("images/fast1.png");
             if (smallCount <= 50 && smallCount > 20) fast5_1.setImagePath("images/fast2.png");
-            if (smallCount > 40) smallCount = 0;
+            if (smallCount > 40) smallCount = 0; //reset
         }
         if(fast5_2.getHp() > 0){
             smallCount++;
@@ -572,12 +602,15 @@ public class MySketch extends PApplet {
         }
     }
     if (stageNum == 5){
+        // Draw starting
         scriptures.draw();
         monkX = test1.getX();
         monkY = test1.getY();
+        // Chase main
         scriptures.chase(monkX, monkY);
     }
-
+        // HP BAR
+        // Detect hp value
         if (hpCount == 1){
             hpBar.setImagePath("images/7hp.png");
         } else if (hpCount ==2) {
@@ -594,22 +627,30 @@ public class MySketch extends PApplet {
             hpBar.setImagePath("images/1hp.png");
         } else if (hpCount ==8) {
             hpBar.setImagePath("images/0hp.png");
+            stageNum = 7; // End game at 0 hp
         } else if (hpCount == 0){
             hpBar.setImagePath("images/hp8.png");
+            
         }
+    // CONTROLS
     if (keyPressed) {
+        // increase counters
         count++;
         bananaCount++;
         hpAllowCount++;
         hpHitAllowCount++;
         staffCount++;
+        // left arrow
         if (keyCode == LEFT) {
+            // move chara
             test1.move(0, -5);
+            // animation
             if (count <= 20) test1.setImagePath("images/monkeyM1.png");
             if (count <= 40 && count > 20) test1.setImagePath("images/monkeyM2.png");
             if (count <= 70 && count > 40) test1.setImagePath("images/monkeyM3.png");
-            if (count > 60) count = 0;
-            idleCount = 0;
+            if (count > 60) count = 0; //reset counter
+            idleCount = 0; // reset idle
+        // right arrow
         } else if (keyCode == RIGHT) {
             test1.move(0, 5);
             if (count <= 20) test1.setImagePath("images/monkeyM1.png");
@@ -617,6 +658,7 @@ public class MySketch extends PApplet {
             if (count <= 70 && count > 40) test1.setImagePath("images/monkeyM3.png");
             if (count > 60) count = 0;
             idleCount = 0;
+        // up arrow
         } else if (keyCode == UP) {
             test1.move(-5, 0);
             if (count <= 20) test1.setImagePath("images/monkeyM1.png");
@@ -624,6 +666,7 @@ public class MySketch extends PApplet {
             if (count <= 70 && count > 40) test1.setImagePath("images/monkeyM3.png");
             if (count > 60) count = 0;
             idleCount = 0;
+        // down
         } else if (keyCode == DOWN) {
             test1.move(5, 0);
             if (count <= 20) test1.setImagePath("images/monkeyM1.png");
@@ -631,7 +674,9 @@ public class MySketch extends PApplet {
             if (count <= 70 && count > 40) test1.setImagePath("images/monkeyM3.png");
             if (count > 60) count = 0;
             idleCount = 0;
+        // shift (Healing animation)
         } else if (keyCode == SHIFT){
+            // Animation 
             if (bananaCount <= 5) test1.setImagePath("images/b1.png");
             if (bananaCount <= 10 && bananaCount > 5) test1.setImagePath("images/b2.png");
             if (bananaCount <= 15 && bananaCount > 10) test1.setImagePath("images/b3.png");
@@ -660,28 +705,34 @@ public class MySketch extends PApplet {
             if (bananaCount <= 130 && bananaCount > 125) test1.setImagePath("images/b26.png");
             if (bananaCount <= 140 && bananaCount > 130) {
                 test1.setImagePath("images/b27.png");
+                // Disallow healing at 0 and 8
                 if (hpCount > 0 && hpCount < 8 && bananaCount == 135) {
-                    hpCount--;
-                    hpAllowCount = 0;
+                    hpCount--; // Heal 
+                    hpAllowCount = 0; // Reset to 0
                 } 
             }
             if (bananaCount > 140) {
-                bananaCount = 0;
+                bananaCount = 0; // reset count
             }
-            idleCount = 0; 
-        } else if (keyCode == CONTROL){      
+            idleCount = 0; // reset count 
+        // CONTROL (ATK)
+        } else if (keyCode == CONTROL){   
+            // Animation
             if (staffCount <= 5) staff.setImagePath("images/staff1.png");
             if (staffCount <= 10 && staffCount > 5) staff.setImagePath("images/staff2.png");
             if (staffCount <= 15 && staffCount > 10) staff.setImagePath("images/staff3.png");
             if (staffCount <= 25 && staffCount > 15) staff.setImagePath("images/staff4.png");
-            if (staffCount > 20) staffCount = 0;
-            idleCount = 0;
+            if (staffCount > 20) staffCount = 0; // reset counter
+            idleCount = 0; // reset counter
             // Stage 1
             if (staff.isCollidingWith2(small)){
+                // animation
                 small.setImagePath("images/smallDeath.png");
+                // set hp to 0 
                 small.setHp(0);
+                // Kill mob
                 small.die(9999,9999);
-                smallDemonCount--;
+                smallDemonCount--; // reduce for stage counter
             }
             if (staff.isCollidingWith2(small2)){
                 small2.setHp(0);
@@ -710,8 +761,11 @@ public class MySketch extends PApplet {
             }
            // Stage 2
             if (staff.isCollidingWith2(small2_1)){
+                // Set hp 0
                 small2_1.setHp(0);
+                // Kill
                 small2_1.die(9999,9999);
+                // Reduce for stage counter
                 stage2Count--;
             }
             if (staff.isCollidingWith2(small2_2)){
@@ -748,7 +802,9 @@ public class MySketch extends PApplet {
             }
            // Stage 3
            if (staff.isCollidingWith2(demon3_1)){
+               // Call hit to lower hp
                 demon3_1.hit();
+                // When dead 
                 if (demon3_1.getHp() <= 0){
                     demon3_1.die(9999,9999);
                     stage3Count--;
@@ -791,7 +847,9 @@ public class MySketch extends PApplet {
             }
            // Stage 4
            if (staff.isCollidingWith2(demon4_1)){
+               // Call hit to lower hp
                 demon4_1.hit();
+                // when dead
                 if (demon4_1.getHp() <= 0){
                     demon4_1.die(9999,9999);
                     stage4Count--;
@@ -841,7 +899,9 @@ public class MySketch extends PApplet {
             }
            // Stage 5
            if (staff.isCollidingWith2(fast5_1)){
+               // call hit to lower hp
                 fast5_1.hit();
+                // when dead
                 if (fast5_1.getHp() <= 0){
                     fast5_1.die(9999,9999);
                     stage5Count--;
@@ -870,11 +930,14 @@ public class MySketch extends PApplet {
             }
         }     
         }
+    
+    //COLLOSIONS 
     // Stage 1
     if (small.isCollidingWith(test1)){
+        // Hit immunity (prevent 60 hits a second) 
         if (hpHitAllowCount > 15) {
-            hpCount++;
-            hpHitAllowCount = 0;
+            hpCount++; // increase counter
+            hpHitAllowCount = 0; // allolw hits
         }
     } 
     if (small2.isCollidingWith(test1)){
@@ -1051,7 +1114,7 @@ public class MySketch extends PApplet {
         }
     }
     if (Boss5_1.isCollidingWith(test1)){
-        this.text("Total win Count", 300, 200);
+        
         if (hpHitAllowCount > 15) {
             hpCount++;
             hpHitAllowCount = 0;
@@ -1059,31 +1122,29 @@ public class MySketch extends PApplet {
     }
     // Stage 6
     if (scriptures.isCollidingWith(test1)){
+        // Move scriptures off screen
         scriptures.die(9999999, 9999999);
+        // Wrtie to file
         try{
+            // Printwriter/file
             FileWriter writer = new FileWriter("winRecords", true);
             PrintWriter q = new PrintWriter(writer);
-            q.print("\n 1");
-            q.close();
+            q.print("\n 1"); // Writing
+            q.close(); // Close
         } catch (IOException p){
                 System.out.print("Java Exception " + p);
             }
-        
-        
-        
-        
-        
         stage6Count--;
         
         
-        
-        
-        
-        
+
         
     }
+    // Idle animation
     if (!keyPressed){
+        // Increase counter
         idleCount++;
+        // Set animations
         staff.setImagePath("images/staff5.png");
         if (idleCount < 40) test1.setImagePath("images/monkeyidlepos1.png");
         if (idleCount < 80 && idleCount > 40) test1.setImagePath("images/monkeyidlepos2.png");
