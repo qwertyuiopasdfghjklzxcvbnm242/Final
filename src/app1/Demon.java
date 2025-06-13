@@ -13,7 +13,7 @@ import processing.core.PImage;
 public class Demon extends Tester{
     // Declare variables
     public int x,y;
-    private int age;
+    private static int speed;
     private String name;
     private PApplet app;
     private PImage image;
