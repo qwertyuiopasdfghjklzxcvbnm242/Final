@@ -25,6 +25,10 @@ public class Demon extends Tester{
         super(p, x, y, imagePath);
         this.hp = hp;
     }
+    public Demon(PApplet p, int x , int y, String imagePath){
+        super(p, x, y, imagePath);
+        this.hp = 1;
+    }
     /*
     * this method returns hp
     * @return hp
