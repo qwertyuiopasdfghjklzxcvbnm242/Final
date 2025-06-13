@@ -106,12 +106,12 @@ public class MySketch extends PApplet {
     bosscoord = new coord((int)(Math.random() * 1000), (int)(Math.random() * 1000));
     
     // Stage 1
-    small = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
-    small2 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
-    small3 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
-    small4 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
-    small5 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
-    small6 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
+    small = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png");
+    small2 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png");
+    small3 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png");
+    small4 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png");
+    small5 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png");
+    small6 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png");
 
     
     // Stage 2
