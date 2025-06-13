@@ -90,6 +90,7 @@ public class Tester {
             move(7,0);
         }  
     }
+
     public void chase1_2 (int dx, int dy){
         if (x > dx-20){
             move(0,-1);
@@ -102,7 +103,6 @@ public class Tester {
             move(1,0);
         }  
     }
-    
     
     
     

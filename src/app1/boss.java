@@ -28,5 +28,8 @@ public class boss extends Tester{
         hp--;
     }
 
-    
+    public int getHP(){
+        return hp;
+    }
+
 }

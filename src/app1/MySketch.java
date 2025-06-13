@@ -11,6 +11,7 @@ import java.util.Scanner;
 import processing.core.PApplet;
 
 public class MySketch extends PApplet {
+  // Declare variables
   private Tester test1;
   private Tester hpBar;
   private Tester testing;
@@ -54,7 +55,7 @@ public class MySketch extends PApplet {
   private Demon fast5_1;
   private Demon fast5_2;
   private Demon fast5_3;
-  private Demon Boss5_1;
+  private boss Boss5_1;
   
   private Tester scriptures; 
   private Tester grat;
@@ -74,7 +75,7 @@ public class MySketch extends PApplet {
   private int staffY;
   private int monkX;
   private int monkY;
-  private int stageNum = 0;
+  private int stageNum = 4;
   private int smallDemonCount;
   private int stage2Count;
   private int stage3Count;
@@ -142,7 +143,7 @@ public class MySketch extends PApplet {
     fast5_1 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/fast1.png", 1);
     fast5_2 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/fast1.png", 1);
     fast5_3 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/fast1.png", 1);
-    Boss5_1 = new Demon(this,(int)(Math.random() * 1000), (int)(Math.random() * 1000) , "images/boss1.png", 500);
+    Boss5_1 = new boss(this, bosscoord , "images/boss1.png", 500);
     
     // Stage 6
     scriptures = new Tester(this, 2000, 200,"images/test1.png");
@@ -560,7 +561,7 @@ public class MySketch extends PApplet {
             if (smallCount <= 50 && smallCount > 20) fast5_3.setImagePath("images/fast1.png");
             if (smallCount > 40) smallCount = 0;
         }
-        if(Boss5_1.getHp() > 0){
+        if(Boss5_1.getHP() > 0){
             smallCount++;
             monkX = test1.getX();
             monkY = test1.getY();
@@ -862,7 +863,7 @@ public class MySketch extends PApplet {
             }
            if (staff.isCollidingWith2(Boss5_1)){
                 Boss5_1.hit();
-                if (Boss5_1.getHp() <= 0){
+                if (Boss5_1.getHP() <= 0){
                     Boss5_1.die(9999,9999);
                     stage5Count--;
                 }
