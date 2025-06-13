@@ -99,7 +99,7 @@ public class MySketch extends PApplet {
   public void setup() {
     // Instantiate 
     background(255);
-    test1 = new Tester(this, 200, 200,"images/idle.png");
+    test1 = new Tester(this, 200, 600,"images/idle.png");
     hpBar = new Tester(this, 5, 5, "images/hp8.png");
     testing = new Tester(this, 600, 100, "images/demon1.png");
     staff = new Staff(this, 200, 200, "images/staff5.png");
