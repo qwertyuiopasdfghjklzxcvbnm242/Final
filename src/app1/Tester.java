@@ -13,6 +13,7 @@ import processing.core.PImage;
  */
 public class Tester {
     // Declare variables
+    private static final int SPEED = 7;
     public int x,y;
     private PApplet app;
     public PImage image;
@@ -127,12 +128,12 @@ public class Tester {
         if (x > dx+40){
             move(0,-7);
         } else if (x < dx+40){
-            move(0,7);
+            move(0,SPEED);
         }
         if (y > dy){
             move(-7,0);
         } else if (y < dy){
-            move(7,0);
+            move(SPEED,0);
         }  
     }
     /*

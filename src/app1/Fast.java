@@ -13,6 +13,7 @@ import processing.core.PImage;
  */
 public class Fast extends Demon {
     // Declare varaibles
+    
     public int x,y;
     private int age;
     private String name;
