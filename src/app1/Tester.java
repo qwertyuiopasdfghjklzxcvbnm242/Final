@@ -90,6 +90,22 @@ public class Tester {
             move(7,0);
         }  
     }
+    public void chase1_2 (int dx, int dy){
+        if (x > dx-20){
+            move(0,-1);
+        } else if (x < dx-20){
+            move(0,1);
+        }
+        if (y > dy-20){
+            move(-1,0);
+        } else if (y < dy-20){
+            move(1,0);
+        }  
+    }
+    
+    
+    
+    
     public void die (int dx, int dy){
         if (x > dx+100){
             move(0,-1000);

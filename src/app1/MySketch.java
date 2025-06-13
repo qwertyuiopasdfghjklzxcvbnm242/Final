@@ -3,6 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package app1;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
 import processing.core.PApplet;
 
 public class MySketch extends PApplet {
@@ -51,6 +56,15 @@ public class MySketch extends PApplet {
   private Demon fast5_3;
   private Demon Boss5_1;
   
+  private Tester scriptures; 
+  private Tester grat;
+  
+  private Tester bud;
+  private Tester d1;
+  private Tester d2;
+  private Tester d3;
+  private coord bosscoord;
+  
   
   private boolean left = false;
   private boolean right = false;
@@ -61,11 +75,12 @@ public class MySketch extends PApplet {
   private int monkX;
   private int monkY;
   private int stageNum = 0;
-  private int smallDemonCount = 6;
-  private int stage2Count = 7;
-  private int stage3Count = 6;
-  private int stage4Count = 7;
-  private int stage5Count = 4;
+  private int smallDemonCount;
+  private int stage2Count;
+  private int stage3Count;
+  private int stage4Count;
+  private int stage5Count;
+  private int stage6Count;
   private int smallCount = 0;
   private int hpAllowCount = 0;
   private int hpHitAllowCount = 0;
@@ -75,6 +90,7 @@ public class MySketch extends PApplet {
   private int idleCount = 0;
   private int bananaCount = 0;
   private int deathCount = 0;
+  private int tutCount = 0;
   private boolean banana = false;
   public void settings() {
     size(1500, 800);
@@ -85,7 +101,7 @@ public class MySketch extends PApplet {
     hpBar = new Tester(this, 5, 5, "images/hp8.png");
     testing = new Tester(this, 600, 100, "images/demon1.png");
     staff = new Staff(this, 200, 200, "images/staff5.png");
-    
+    bosscoord = new coord((int)(Math.random() * 1000), (int)(Math.random() * 1000));
     
     // Stage 1
     small = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/small1.png", 1);
@@ -120,13 +136,22 @@ public class MySketch extends PApplet {
     demon4_4 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
     demon4_5 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
     demon4_6 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 50);
-    fast4_1 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/test1.png", 50);
+    fast4_1 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/test1.png", 1);
     
     // Stage 5
-    fast5_1 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/test1.png", 50);
-    fast5_2 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/test1.png", 50);
-    fast5_3 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/test1.png", 50);
-    Boss5_1 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/demon1.png", 500);
+    fast5_1 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/fast1.png", 1);
+    fast5_2 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/fast1.png", 1);
+    fast5_3 = new Demon(this, (int)(Math.random() * 1000), (int)(Math.random() * 1000), "images/fast1.png", 1);
+    Boss5_1 = new Demon(this,(int)(Math.random() * 1000), (int)(Math.random() * 1000) , "images/boss1.png", 500);
+    
+    // Stage 6
+    scriptures = new Tester(this, 2000, 200,"images/test1.png");
+    grat = new Tester (this, 450, 50,"images/congrat.png");
+    
+    bud = new Tester (this, 450, 200, "images/buddha.png");
+    d1 = new Tester (this, 450, 50, "images/d1.png");
+    d2 = new Tester (this, 500, 50, "images/d2.png");
+    d3 = new Tester (this, 550, 50, "images/d3.png");
     
     
     stage1 = new Tester(this, 500, 50, "images/stageN1.png");
@@ -134,15 +159,37 @@ public class MySketch extends PApplet {
     stage3 = new Tester(this, 500, 50, "images/stageN3.png");
     stage4 = new Tester(this, 500, 50, "images/stageN4.png");
     stage5 = new Tester(this, 500, 50, "images/stageN5.png");
+    
+    
+    int lines = countLines("stageFile");
+    int [] stageNumCounters = new int [lines];
+    String [] stringStageNumCounters = take(lines, "stageFile");
+    for (int i = 0; i < stringStageNumCounters.length;i++){
+        stageNumCounters[i] = Integer.parseInt(stringStageNumCounters[i]);
+    }
+    smallDemonCount = stageNumCounters[0];
+    stage2Count = stageNumCounters[1];
+    stage3Count = stageNumCounters[2];
+    stage4Count = stageNumCounters[3];
+    stage5Count = stageNumCounters[4];
+    stage6Count = stageNumCounters[5];
+    
+    int winCount = countLines("winRecords");
+    winCount--;
+    System.out.print("Total wins: ");
+    System.out.print(winCount);
+    
   }
   public void draw() {
+
+
+    
     
     background(240,255,255);
     staff.chase2(staffX, staffY);
     staff.draw();
     test1.draw();
     hpBar.draw();
-    System.out.print(stageNum);
     staffX = test1.getX();
     staffY = test1.getY();
     if (smallDemonCount == 0){
@@ -161,6 +208,36 @@ public class MySketch extends PApplet {
         stageNum = 4;
         stage4Count = 10;
     }
+    if (stage5Count == 0){
+        stageNum = 5;
+        stage5Count = 10;
+    }
+    if (stage6Count == 0){
+        grat.draw();
+    }
+    if (stageNum == -1){
+        
+    }
+    
+    if (stageNum == -1){
+        tutCount++;
+        bud.draw();
+        if (tutCount < 300 && tutCount > 100) {
+            d1.draw();
+        }
+        if (tutCount > 300 && tutCount < 400) {
+            d2.draw();
+        }
+        if (tutCount > 400 && tutCount < 500) {
+            d3.draw();
+        }
+        if (tutCount > 500){
+            stageNum = 0;
+        }
+    }
+    
+    
+    
     if (stageNum == 0){
         stage1.draw();
         stage1.chase(460, -500);
@@ -443,9 +520,9 @@ public class MySketch extends PApplet {
             smallCount++;
             monkX = test1.getX();
             monkY = test1.getY();
-            fast4_1.chase2(monkX,monkY);
-            if (smallCount <= 20) fast4_1.setImagePath("images/test1.png");
-            if (smallCount <= 50 && smallCount > 20) fast4_1.setImagePath("images/test2.png");
+            fast4_1.chase3(monkX,monkY);
+            if (smallCount <= 20) fast4_1.setImagePath("images/fast1.png");
+            if (smallCount <= 50 && smallCount > 20) fast4_1.setImagePath("images/fast2.png");
             if (smallCount > 40) smallCount = 0;
         }
     }
@@ -460,32 +537,45 @@ public class MySketch extends PApplet {
             smallCount++;
             monkX = test1.getX();
             monkY = test1.getY();
-            fast5_1.chase2(monkX,monkY);
-            if (smallCount <= 20) fast5_1.setImagePath("images/test1.png");
-            if (smallCount <= 50 && smallCount > 20) fast5_1.setImagePath("images/test2.png");
+            fast5_1.chase3(monkX,monkY);
+            if (smallCount <= 20) fast5_1.setImagePath("images/fast1.png");
+            if (smallCount <= 50 && smallCount > 20) fast5_1.setImagePath("images/fast2.png");
             if (smallCount > 40) smallCount = 0;
         }
         if(fast5_2.getHp() > 0){
             smallCount++;
             monkX = test1.getX();
             monkY = test1.getY();
-            fast5_2.chase2(monkX,monkY);
-            if (smallCount <= 20) fast5_2.setImagePath("images/test1.png");
-            if (smallCount <= 50 && smallCount > 20) fast5_2.setImagePath("images/test2.png");
+            fast5_2.chase3(monkX,monkY);
+            if (smallCount <= 20) fast5_2.setImagePath("images/fast1.png");
+            if (smallCount <= 50 && smallCount > 20) fast5_2.setImagePath("images/fast2.png");
             if (smallCount > 40) smallCount = 0;
         }
         if(fast5_3.getHp() > 0){
             smallCount++;
             monkX = test1.getX();
             monkY = test1.getY();
-            fast5_3.chase2(monkX,monkY);
-            if (smallCount <= 20) fast5_1.setImagePath("images/test1.png");
-            if (smallCount <= 50 && smallCount > 20) fast5_3.setImagePath("images/test2.png");
+            fast5_3.chase3(monkX,monkY);
+            if (smallCount <= 20) fast5_1.setImagePath("images/fast2.png");
+            if (smallCount <= 50 && smallCount > 20) fast5_3.setImagePath("images/fast1.png");
             if (smallCount > 40) smallCount = 0;
         }
-
+        if(Boss5_1.getHp() > 0){
+            smallCount++;
+            monkX = test1.getX();
+            monkY = test1.getY();
+            Boss5_1.chase1_2(monkX,monkY);
+            if (smallCount <= 20) Boss5_1.setImagePath("images/boss1.png");
+            if (smallCount <= 50 && smallCount > 20) Boss5_1.setImagePath("images/boss2.png");
+            if (smallCount > 40) smallCount = 0;
+        }
     }
-    
+    if (stageNum == 5){
+        scriptures.draw();
+        monkX = test1.getX();
+        monkY = test1.getY();
+        scriptures.chase(monkX, monkY);
+    }
 
         if (hpCount == 1){
             hpBar.setImagePath("images/7hp.png");
@@ -753,28 +843,28 @@ public class MySketch extends PApplet {
                 fast5_1.hit();
                 if (fast5_1.getHp() <= 0){
                     fast5_1.die(9999,9999);
-                    stage4Count--;
+                    stage5Count--;
                 }
             }
            if (staff.isCollidingWith2(fast5_2)){
                 fast5_2.hit();
                 if (fast5_2.getHp() <= 0){
                     fast5_2.die(9999,9999);
-                    stage4Count--;
+                    stage5Count--;
                 }
             }
            if (staff.isCollidingWith2(fast5_3)){
                 fast5_3.hit();
                 if (fast5_3.getHp() <= 0){
                     fast5_3.die(9999,9999);
-                    stage4Count--;
+                    stage5Count--;
                 }
             }
            if (staff.isCollidingWith2(Boss5_1)){
                 Boss5_1.hit();
                 if (Boss5_1.getHp() <= 0){
                     Boss5_1.die(9999,9999);
-                    stage4Count--;
+                    stage5Count--;
                 }
             }
         }     
@@ -960,12 +1050,37 @@ public class MySketch extends PApplet {
         }
     }
     if (Boss5_1.isCollidingWith(test1)){
+        this.text("Total win Count", 300, 200);
         if (hpHitAllowCount > 15) {
             hpCount++;
             hpHitAllowCount = 0;
         }
     }
-    
+    // Stage 6
+    if (scriptures.isCollidingWith(test1)){
+        scriptures.die(9999999, 9999999);
+        try{
+            FileWriter writer = new FileWriter("winRecords", true);
+            PrintWriter q = new PrintWriter(writer);
+            q.print("\n 1");
+            q.close();
+        } catch (IOException p){
+                System.out.print("Java Exception " + p);
+            }
+        
+        
+        
+        
+        
+        stage6Count--;
+        
+        
+        
+        
+        
+        
+        
+    }
     if (!keyPressed){
         idleCount++;
         staff.setImagePath("images/staff5.png");
@@ -976,6 +1091,60 @@ public class MySketch extends PApplet {
     }   
     }
 
+    /**
+     * Counts line in file
+     * @return lineCount
+     */
+    private int countLines(String filename){
+        // Declare Variables
+        int lineCount = 0;
+        // Try catch
+        try {
+            // Loop through data.txt if there is a next line
+            Scanner fileInput = new Scanner(new File(filename));
+            while (fileInput.hasNextLine()){
+                fileInput.nextLine();
+                lineCount++; // Add one to counter
+            }
+            fileInput.close(); // Close scanner
+           
+        } catch(IOException e){
+            System.out.print("Java Exception" + e);
+        }
+        return lineCount; // Return lineCount
+    }
+    /**
+     * Take questions from file
+     * @param lineCount This creates the array size
+     * @return questions This holds the questions in an array
+     */
+    private String [] take(int lineCount, String filename){
+        // Declare Variables
+        int count = 0;
+        String [] Q = new String [lineCount];
+        // Try catch
+         try{
+             // Loop through data.txt and store questions
+            Scanner fileInput = new Scanner(new File(filename));
+            while(fileInput.hasNext()){
+                String output = fileInput.nextLine();
+                // Store values
+                Q[count] = output;
+                count++; // Add to counter
+            }
+        } catch (IOException e){
+            System.err.println("Java Exception: " + e);
+        } catch (StringIndexOutOfBoundsException p) {
+            System.err.println("Java Exception: " + p);
+        }
 
+        return Q; // Return array
+    }
+  
+  
+  
+  
+  
+  
     }//end class
 
